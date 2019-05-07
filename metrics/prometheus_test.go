@@ -143,7 +143,6 @@ func TestPrometheus(t *testing.T) {
 			recordMetrics: func(m metrics.Recorder) {
 				m1 := m.WithID("test")
 				m2 := m.WithID("test2")
-				m1.SetCircuitbreakerCurrentState("new")
 				m1.SetCircuitbreakerCurrentState("open")
 				m1.SetCircuitbreakerCurrentState("close")
 				m2.SetCircuitbreakerCurrentState("half-open")
