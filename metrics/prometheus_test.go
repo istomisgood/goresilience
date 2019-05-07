@@ -143,10 +143,10 @@ func TestPrometheus(t *testing.T) {
 			recordMetrics: func(m metrics.Recorder) {
 				m1 := m.WithID("test")
 				m2 := m.WithID("test2")
-				m1.SetCircuitbreakerCurrentState(0) // new
-				m1.SetCircuitbreakerCurrentState(3) // open
-				m1.SetCircuitbreakerCurrentState(1) // close
-				m2.SetCircuitbreakerCurrentState(2) // half-open
+				m1.SetCircuitbreakerCurrentState("new")
+				m1.SetCircuitbreakerCurrentState("open")
+				m1.SetCircuitbreakerCurrentState("close")
+				m2.SetCircuitbreakerCurrentState("half-open")
 			},
 			expMetrics: []string{
 				`goresilience_circuitbreaker_current_state{id="test",state="half-open"}} 0`,
