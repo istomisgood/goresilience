@@ -20,7 +20,18 @@ const (
 )
 
 func (st state) String () string {
-	return [...]string{"new", "open", "half-open", "closed"}[st]
+    switch st {
+      case stateNew:
+		return "new"
+	  case stateOpen:
+		return "open"
+	  case stateHalfOpen:
+		return "half-open"
+	  case stateClosed:
+		return "closed"
+	  default:
+		return "unknown"
+	}
 }
 
 func (st state) condition () int {
