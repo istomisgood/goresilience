@@ -19,15 +19,8 @@ const (
 	stateClosed
 )
 
-var stateStrings = []string {
-	"new",
-	"open",
-	"halfopen",
-	"closed",
-}
-
-func (st state) label () string {
-	return stateStrings[st]
+func (st state) String () string {
+	return [...]string{"new", "open", "half-open", "closed"}[st]
 }
 
 func (st state) condition () int {
@@ -242,8 +235,8 @@ func (c *circuitbreaker) moveState(state state, metricsRec metrics.Recorder) {
 
 	// Only change if the state changed.
 	if c.state != state {
-		metricsRec.IncCircuitbreakerState(state.label())
-		metricsRec.SetCircuitbreakerCurrentState(state.condition())
+		metricsRec.IncCircuitbreakerState(state)
+		metricsRec.SetCircuitbreakerCurrentState(state)
 
 		c.state = state
 		c.stateStarted = time.Now()

@@ -149,8 +149,12 @@ func TestPrometheus(t *testing.T) {
 				m2.SetCircuitbreakerCurrentState(2) // half-open
 			},
 			expMetrics: []string{
-				`goresilience_circuitbreaker_current_state{id="test"} 1`,
-				`goresilience_circuitbreaker_current_state{id="test2"} 2`,
+				`goresilience_circuitbreaker_current_state{id="test",state="half-open"}} 0`,
+				`goresilience_circuitbreaker_current_state{id="test",state="open"}} 0`,
+				`goresilience_circuitbreaker_current_state{id="test",state="close"}} 1`,
+				`goresilience_circuitbreaker_current_state{id="test",state="half-open"}} 1`,
+				`goresilience_circuitbreaker_current_state{id="test",state="open"}} 0`,
+				`goresilience_circuitbreaker_current_state{id="test",state="close"}} 0`,
 			},
 		},
 		{

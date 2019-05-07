@@ -132,7 +132,7 @@ func (p *prometheusRec) registerMetrics() {
 		Subsystem: promCBSubsystem,
 		Name:      "current_state",
 		Help:      "The current state of the circuit breaker runner.",
-	}, []string{"id"})
+	}, []string{"id", "state"})
 
 	p.chaosFailureInjections = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Namespace: promNamespace,
@@ -223,8 +223,9 @@ func (p prometheusRec) IncCircuitbreakerState(state string) {
 	p.cbStateChanges.WithLabelValues(p.id, state).Inc()
 }
 
-func (p prometheusRec) SetCircuitbreakerCurrentState(condition int) {
-	p.cbCurrentState.WithLabelValues(p.id).Set(float64(condition))
+func (p prometheusRec) SetCircuitbreakerCurrentState(state string) {
+    // TODO: reset the other (old) state
+	p.cbCurrentState.WithLabelValues(p.id, state).Set(1)
 }
 
 func (p prometheusRec) IncChaosInjectedFailure(kind string) {
